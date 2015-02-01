@@ -25,6 +25,37 @@ def signalize(sig):
 			raise ValueError
 		else:
 			signalize(number)
+def translate(tra, style):
+	type = checkType(tra)
+	if type == None:
+		raise ValueError
+	elif type == "n":
+		if style == "n":
+			raise ValueError
+		elif style == "u":
+			return numberToUserText(tra)
+		elif style == "s":
+			return numberToSystemText(tra)
+		else:
+			raise ValueError
+	elif type == "u":
+		if style == "u":
+			raise ValueError
+		elif style == "n":
+			return userTextToNumber(tra)
+		elif style == "s":
+			return userTextToSystemText(tra)
+		else:
+			raise ValueError
+	elif type == "s":
+		if style == "s":
+			raise ValueError
+		elif style == "n":
+			return SystemTextToNumber(tra)
+		elif style == "u":
+			return  SystemTextToUserText(tra)
+	else:
+		raise ValueError
 
 ##############################BASIC FUNCTIONS##################################
 
@@ -49,7 +80,14 @@ def SystemTextToNumber(SystemText):
 	if SystemText in textSystemNumbers:
 		return textSystemNumbers[SystemText]
 def UserTextToNumber(UserText):
-	pass
+	if UserText in textUserNumbers:
+		return textUserNumbers[UserText]
+def userTextToSystemText(UserText):
+	number = UserTextToNumber(UserText)
+	return numberToSystemText(number)
+def systemTextToUserText(SystemText):
+	number =  SystemTextToNumber(SystemText)
+	return numberToUserText(number)
 def textToNumber(text):
 	if isSystem(text) == True:
 		return SystemTextToNumber(text)
