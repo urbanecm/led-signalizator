@@ -3,19 +3,22 @@
 #############################DEFINE VARIABLES################################
 
 numbersUserText = {0 : "", 1 : "", 2 : "", 3 : ""}
-numbersSystemText = {0 : "Ok", 1 : "Undefined", 2 : "Q", 3 : "Error"
+numbersSystemText = {0 : "Ok", 1 : "Undefined", 2 : "Q", 3 : "Error"}
 textSystemNumbers = {"Ok" : 0, "Undefined" : 1, "Q" : 2, "Error" : 3}
 textUserNumbers = {"" : 0, "" : 1, "" : 2, "" : 3}
-numbersMethod = {0 : signalizeOk, 1 : signalizeUndefined, 2 : signalizeQ, 3 : signalizeError}
+numbersMethod = {0 : lambda: signalizeOk(), 1 : lambda: signalizeUndefined(), 2 : lambda: signalizeQ(), 3 : lambda: signalizeError()}
 
 ##############################USER FRIENDLY FUNCTIONS#########################
 
 def signalize(sig):
-	type = checkType()
+	type = checkType(sig)
 	if type == None:
-		pass
+		raise ValueError
 	elif type == "n":
-		pass
+		for key in numbersMethod:
+			if key == sig:
+				method = numbersMethod[key]
+				method()
 	else:
 		number = textToNumber(sig)
 		if number == None:
@@ -26,13 +29,13 @@ def signalize(sig):
 ##############################BASIC FUNCTIONS##################################
 
 def signalizeError():
-	pass
+	print "Error"
 def signalizeOk():
-	pass
+	print "Ok"
 def signalizeQ():
-	pass
+	print "Q"
 def signalizeUndefined():
-	pass
+	print "Undefined"
 
 #############################TRANSLATOR FUNCTIONS#############################
 
@@ -52,13 +55,13 @@ def textToNumber(text):
 		return SystemTextToNumber(text)
 	elif isUser(text) == True:
 		return UserTextToNumber(text)
-	else
+	else:
 		return None
 
 ##########################HELP FUNCTION######################################
 
 def checkType(o):
-	if isnumeric(o):
+	if isNumber(o):
 		return "n"
 	elif isSystem(o):
 		return "s"
@@ -80,3 +83,8 @@ def isUser(s):
 		return False
 	else:
 		return None
+def isNumber(o):
+	if o in numbersSystemText:
+		return True
+	else:
+		return False

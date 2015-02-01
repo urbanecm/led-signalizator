@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-dic = {"aaa" : "abc", "bbb" : "bcd"}
+import Signalizator
 
-for d in dic:
-	print d
+sig = raw_input("Sig:")
+Signalizator.signalize(sig)
